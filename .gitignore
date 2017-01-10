@@ -3,3 +3,8 @@
 ################################################################################
 
 *.suo
+/bin/Debug
+*.bak
+*.db
+/obj/Debug
+/Kerbal Space Program/StationScience.zip
