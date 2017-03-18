@@ -8,3 +8,4 @@
 *.db
 /obj/Debug
 /Kerbal Space Program/StationScience.zip
+/Properties/AssemblyInfo.cs
