@@ -44,7 +44,7 @@ namespace StationScience
 
         public float calcReward(float value, bool first_time = false)
         {
-            Debug.Log("calcReward: " + y_intercept + " + " + value + " * " + slope + " * ( " + first_time + " ? " + first_time_multiplier + ")");
+            StnSciScenario.Log("calcReward: " + y_intercept + " + " + value + " * " + slope + " * ( " + first_time + " ? " + first_time_multiplier + ")");
             return (y_intercept + value * slope) * (first_time ? first_time_multiplier : 1);
         }
 
@@ -71,7 +71,6 @@ namespace StationScience
     {
         public void Load(ConfigNode node)
         {
-            Debug.Log("CNMap: Load called");
             foreach (ConfigNode.Value val in node.values)
             {
                 try
@@ -80,7 +79,7 @@ namespace StationScience
                 }
                 catch (Exception e)
                 {
-                    Debug.LogException(e);
+                    StnSciScenario.LogException(e);
                     this[val.name] = default(TValue);
                 }
             }
@@ -88,7 +87,7 @@ namespace StationScience
 
         public void Save(ConfigNode node)
         {
-            Debug.LogError("CNMap.Save called; not implemented");
+            StnSciScenario.LogError("CNMap.Save called; not implemented");
         }
     }
 
@@ -108,7 +107,6 @@ namespace StationScience
 
         public void Load(ConfigNode node)
         {
-            Debug.Log("CNMapList: Load called");
             foreach (ConfigNode.Value val in node.values)
             {
                 if(!this.ContainsKey(val.name))
@@ -119,14 +117,14 @@ namespace StationScience
                 }
                 catch (Exception e)
                 {
-                    Debug.LogException(e);
+                    StnSciScenario.LogException(e);
                 }
             }
         }
 
         public void Save(ConfigNode node)
         {
-            Debug.LogError("CNMapList.Save called; not implemented");
+            StnSciScenario.LogError("CNMapList.Save called; not implemented");
         }
     }
 
@@ -184,7 +182,7 @@ namespace StationScience
 
         public void Load(ConfigNode node)
         {
-            Debug.Log("Setings: load called");
+            //StnSciScenario.Log("Setings: load called");
             foreach (ConfigNode n in node.GetNodes("experimentChallenge"))
                 experimentChallenge.Load(n);
             foreach (ConfigNode n in node.GetNodes("planetChallenge"))
@@ -272,6 +270,26 @@ namespace StationScience
                     GameScenes.FLIGHT, GameScenes.EDITOR, GameScenes.TRACKSTATION)]
     public class StnSciScenario : ScenarioModule
     {
+        public static void Log(string message)
+        {
+            Debug.Log("[StatSci:" + DateTime.Now + "]: " + message);
+        }
+
+        public static void LogError(string error)
+        {
+            Debug.LogError("[StatSci:" + DateTime.Now + "]: " + error);
+        }
+
+        public static void LogWarning(string warning)
+        {
+            Debug.LogWarning("[StatSci:" + DateTime.Now + "]: " + warning);
+        }
+
+        public static void LogException(Exception ex)
+        {
+            Debug.LogException(ex);
+        }
+
         public static StnSciScenario Instance { get; private set; }
 
         public StnSciSettings settings { get; private set; }
@@ -289,7 +307,7 @@ namespace StationScience
                 {
                     if (!ConfigNode.LoadObjectFromConfig(settings, node))
                     {
-                        Debug.Log("Station Science: failed to load settings");
+                        StnSciScenario.Log("Station Science: failed to load settings");
                     }
                     settings.Load(node);
                 }

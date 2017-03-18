@@ -68,7 +68,7 @@ namespace StationScience.Contracts.Parameters
                 if (a != null)
                     this.parts.Add(a);
                 else
-                    Debug.LogError("Part not found: " + s);
+                    StnSciScenario.LogError("Part not found: " + s);
             }
         }
 
@@ -217,7 +217,7 @@ namespace StationScience.Contracts.Parameters
             experimentType = PartLoader.getPartInfoByName(exp);
             if (experimentType == null)
             {
-                Debug.LogError("Couldn't find experiment part: " + exp);
+                StnSciScenario.LogError("Couldn't find experiment part: " + exp);
                 return false;
             }
             return true;
@@ -233,7 +233,7 @@ namespace StationScience.Contracts.Parameters
             targetBody = FlightGlobals.Bodies.FirstOrDefault(body => body.bodyName.ToLower() == planet.ToLower());
             if (targetBody == null)
             {
-                Debug.LogError("Couldn't find planet: " + planet);
+                StnSciScenario.LogError("Couldn't find planet: " + planet);
                 return false;
             }
             return true;
@@ -311,7 +311,7 @@ namespace StationScience.Contracts.Parameters
 
         private void OnVesselCreate(Vessel vessel)
         {
-            Debug.Log("OnVesselCreate");
+            StnSciScenario.Log("OnVesselCreate");
             AvailablePart experimentType = StnSciParameter.getExperimentType(this);
             if (experimentType == null)
                 return;
@@ -330,7 +330,7 @@ namespace StationScience.Contracts.Parameters
 
         private void OnVesselSituationChange(GameEvents.HostedFromToAction<Vessel,Vessel.Situations> arg)
         {
-            Debug.Log("OnVesselSituationChanged");
+            StnSciScenario.Log("OnVesselSituationChanged");
             if(!((arg.from == Vessel.Situations.LANDED || arg.from == Vessel.Situations.PRELAUNCH) &&
                   (arg.to == Vessel.Situations.FLYING || arg.to == Vessel.Situations.SUB_ORBITAL)))
                 return;
@@ -446,7 +446,7 @@ namespace StationScience.Contracts.Parameters
             if (targetBody == null || experimentType == null)
             if (targetBody == null || experimentType == null)
             {
-                Debug.Log("targetBody or experimentType is null");
+                StnSciScenario.Log("targetBody or experimentType is null");
                 return;
             }
             lastUpdate = UnityEngine.Time.realtimeSinceStartup;
@@ -522,12 +522,12 @@ namespace StationScience.Contracts.Parameters
 
         private void OnRecovered(ProtoVessel pv, bool dummy)
         {
-            Debug.Log("Recovered " + pv.vesselName);
+            StnSciScenario.Log("Recovered " + pv.vesselName);
             CelestialBody targetBody = StnSciParameter.getTargetBody(this);
             AvailablePart experimentType = StnSciParameter.getExperimentType(this);
             if (targetBody == null || experimentType == null)
             {
-                Debug.Log("targetBody or experimentType is null");
+                StnSciScenario.Log("targetBody or experimentType is null");
                 return;
             }
             foreach (ProtoPartSnapshot part in pv.protoPartSnapshots)
@@ -549,7 +549,7 @@ namespace StationScience.Contracts.Parameters
                             }
                             catch(Exception e)
                             {
-                                Debug.LogError(e.ToString());
+                                StnSciScenario.LogError(e.ToString());
                                 continue;
                             }
                             if (launched >= this.Root.DateAccepted && completed >= launched)
@@ -577,12 +577,12 @@ namespace StationScience.Contracts.Parameters
 
         private void OnRecovery(Vessel vessel)
         {
-            Debug.Log("Recovering " + vessel.vesselName);
+            StnSciScenario.Log("Recovering " + vessel.vesselName);
             CelestialBody targetBody = StnSciParameter.getTargetBody(this);
             AvailablePart experimentType = StnSciParameter.getExperimentType(this);
             if (targetBody == null || experimentType == null)
             {
-                Debug.Log("targetBody or experimentType is null");
+                StnSciScenario.Log("targetBody or experimentType is null");
                 return;
             }
             foreach (Part part in vessel.Parts)

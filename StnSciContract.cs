@@ -32,6 +32,7 @@ namespace StationScience.Contracts
 {
     public class StnSciContract : Contract, Parameters.PartRelated, Parameters.BodyRelated
     {
+
         CelestialBody targetBody = null;
         AvailablePart experimentType = null;
 
@@ -62,7 +63,7 @@ namespace StationScience.Contracts
         {
             if (standardDeviation <= 0.0)
             {
-                Debug.LogWarning("Invalid standard deviation: " + standardDeviation);
+                StnSciScenario.LogWarning("Invalid standard deviation: " + standardDeviation);
                 return 0;
             }
               // Use Box-Muller algorithm
@@ -102,7 +103,7 @@ namespace StationScience.Contracts
             }
             else if (shape <= 0.0)
             {
-                Debug.LogWarning("Invalid Gamma shape: " + shape);
+                StnSciScenario.LogWarning("Invalid Gamma shape: " + shape);
                 return 0;
             }
             else
@@ -118,7 +119,9 @@ namespace StationScience.Contracts
             foreach (string entry in set)
             {
                 AvailablePart part = PartLoader.getPartInfoByName(entry);
-                if (!(ResearchAndDevelopment.PartTechAvailable(part) && ResearchAndDevelopment.PartModelPurchased(part)))
+                if (!(ResearchAndDevelopment.PartTechAvailable(part) /*&& ResearchAndDevelopment.PartModelPurchased(part)*/))
+                    //In career mode I certainly don't purchase parts until I need them to fulfil a contract
+                    //And if you can't get the contracts until you have purchased them...
                     return false; 
             }
             return true;
@@ -145,9 +148,11 @@ namespace StationScience.Contracts
 
         protected override bool Generate()
         {
+            Debug.Log("Fish");
+            StnSciScenario.Log("Considering a StatSci contract");
             if (ActiveCount() >= StnSciScenario.Instance.settings.maxContracts)
             {
-                Debug.Log("StationScience contracts cap hit (" +
+                StnSciScenario.Log("StationScience contracts cap hit (" +
                     StnSciScenario.Instance.settings.maxContracts + ").");
                 return false;
             }
@@ -160,9 +165,11 @@ namespace StationScience.Contracts
                 xp *= StnSciScenario.Instance.settings.exceptionalMultiplier;
             if (xp <= 0.5)
                 xp = 0.5;
-
+            StnSciScenario.Log("checking unlocked experiements");
             List<string> experiments = GetUnlockedExperiments();
+            StnSciScenario.Log("experiements = " + experiments + " checking unlocked bodies");
             List<CelestialBody> bodies = GetBodies_Reached(true, false);
+            StnSciScenario.Log("bodies = " + bodies);
 
             List<ContractCandidate> candidates = new List<ContractCandidate>();
             double totalWeight = 0.0;
@@ -170,7 +177,7 @@ namespace StationScience.Contracts
             //Get most difficult combination of planet and experiment that doesn't exceed random difficulty target
             foreach (var exp in experiments)
             {
-                Debug.Log("Experiment: " + exp);
+                StnSciScenario.Log("Experiment: " + exp);
                 double expValue;
                 try
                 {
@@ -182,11 +189,11 @@ namespace StationScience.Contracts
                 }
                 foreach (var body in bodies)
                 {
-                    Debug.Log("Body: " + body.name);
+                    StnSciScenario.Log("Body: " + body.name);
                     int acount = ActiveCount(exp, body);
                     if (acount > 0)
                     {
-                        Debug.Log("Contract already active!");
+                        StnSciScenario.Log("Contract already active!");
                         continue;
                     }
                     double plaValue;
@@ -211,7 +218,7 @@ namespace StationScience.Contracts
                     totalWeight += candidate.weight;
                 }
             }
-            Debug.Log("Candidate List: " + candidates.Count);
+            StnSciScenario.Log("Candidate List: " + candidates.Count);
             double rand = GetUniform() * totalWeight;
             ContractCandidate chosen = null;
             foreach (var cand in candidates)
@@ -227,7 +234,7 @@ namespace StationScience.Contracts
 
             if (chosen == null)
             {
-                Debug.LogError("Couldn't find appropriate planet/experiment!");
+                StnSciScenario.LogError("Couldn't find appropriate planet/experiment!");
                 return false;
             }
 
@@ -246,7 +253,7 @@ namespace StationScience.Contracts
             base.SetExpiry();
 
             float sciReward = StnSciScenario.Instance.settings.contractScience.calcReward(v, first_time);
-            Debug.Log("SciReward: " + sciReward);
+            StnSciScenario.Log("SciReward: " + sciReward);
             base.SetScience(sciReward, targetBody);
 
             base.SetDeadlineYears(StnSciScenario.Instance.settings.contractDeadline.calcReward(v, first_time), targetBody);
@@ -265,12 +272,12 @@ namespace StationScience.Contracts
             int ret = 0;
             if (ContractSystem.Instance == null)
             {
-                Debug.Log("ContractSystem Instance is null");
+                StnSciScenario.Log("ContractSystem Instance is null");
                 return 0;
             }
             if (ContractSystem.Instance.Contracts == null)
             {
-                Debug.Log("ContractSystem ContratsFinished is null");
+                StnSciScenario.Log("ContractSystem ContratsFinished is null");
                 return 0;
             }
             foreach(Contract con in ContractSystem.Instance.Contracts)
@@ -292,12 +299,12 @@ namespace StationScience.Contracts
             int ret = 0;
             if (ContractSystem.Instance == null)
             {
-                Debug.Log("ContractSystem Instance is null");
+                StnSciScenario.Log("ContractSystem Instance is null");
                 return 0;
             }
             if (ContractSystem.Instance.ContractsFinished == null)
             {
-                Debug.Log("ContractSystem ContratsFinished is null");
+                StnSciScenario.Log("ContractSystem ContratsFinished is null");
                 return 0;
             }
             foreach(Contract con in ContractSystem.Instance.ContractsFinished)
@@ -319,7 +326,7 @@ namespace StationScience.Contracts
             experimentType = PartLoader.getPartInfoByName(exp);
             if (experimentType == null)
             {
-                Debug.LogError("Couldn't find experiment part: " + exp);
+                StnSciScenario.LogError("Couldn't find experiment part: " + exp);
                 return false;
             }
             return true;
@@ -330,7 +337,7 @@ namespace StationScience.Contracts
             targetBody = FlightGlobals.Bodies.FirstOrDefault(body => body.bodyName.ToLower() == planet.ToLower());
             if (targetBody == null)
             {
-                Debug.LogError("Couldn't find planet: " + planet);
+                StnSciScenario.LogError("Couldn't find planet: " + planet);
                 return false;
             }
             return true;
@@ -400,7 +407,7 @@ namespace StationScience.Contracts
 
         public override bool MeetRequirements()
         {
-
+            StnSciScenario.Log("Checking MeetRequirements");
             CelestialBodySubtree progress = null;
             foreach (var node in ProgressTracking.Instance.celestialBodyNodes)
             {
@@ -409,10 +416,11 @@ namespace StationScience.Contracts
             }
             if (progress == null)
             {
-                Debug.LogError("ProgressNode for Kerbin not found, terminating");
+                StnSciScenario.LogError("ProgressNode for Kerbin not found, terminating");
                 return false;
             }
-            if(progress.orbit.IsComplete && 
+            StnSciScenario.Log("Checking lab and a docking port");
+            if (progress.orbit.IsComplete && 
                   ( IsPartUnlocked("dockingPort1") ||
                    IsPartUnlocked("dockingPort2") ||
                    IsPartUnlocked("dockingPort3") ||

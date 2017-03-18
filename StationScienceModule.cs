@@ -29,19 +29,27 @@ namespace StationScience
         // 0: force off; 1: auto; 2: force on
 
         [KSPField]
-        public string requiredTrait = "NA";
+        public string requiredSkills = "NA";
+
+        public IEnumerable<String> skills;
 
         [KSPField]
         public double experienceBonus = 0.5;
 
-        public bool checkTrait()
+        public bool checkSkill()
         {
-            if(requiredTrait == "" || requiredTrait == "NA")
+            if (requiredSkills == "" || requiredSkills == "NA")
                 return true;
+            if (skills == null)
+            {
+                skills = requiredSkills.Split(',').Select(s => s.Trim());
+            }
             foreach (var crew in part.protoModuleCrew)
             {
-                if (crew.experienceTrait.TypeName == requiredTrait)
-                    return true;
+                foreach (String skill in skills) {
+                    if (crew.HasEffect(skill))
+                        return true;
+                }
             }
             return false;
         }
@@ -65,10 +73,10 @@ namespace StationScience
             if (IsActivated && (curTime = UnityEngine.Time.realtimeSinceStartup) - lastCheck > 0.1)
             {
                 lastCheck = curTime;
-                if (!checkTrait())
+                if (!checkSkill())
                 {
                     StopResourceConverter();
-                    this.status = "Inactive; no " + requiredTrait;
+                    this.status = "Inactive; no " + requiredSkills;
                 }
                 else if (StationExperiment.checkBoring(vessel, false))
                 {
@@ -81,10 +89,13 @@ namespace StationScience
                     int nstars = 0;
                     foreach (var crew in part.protoModuleCrew)
                     {
-                        if (crew.experienceTrait.TypeName == requiredTrait)
+                        foreach (String skill in skills)
                         {
-                            nsci += 1;
-                            nstars += crew.experienceLevel;
+                            if (crew.HasEffect(skill))
+                            {
+                                nsci += 1;
+                                nstars += crew.experienceLevel;
+                            }
                         }
                     }
                     SetEfficiencyBonus((float)Math.Max(nsci + nstars * experienceBonus, 1.0));
@@ -348,10 +359,10 @@ namespace StationScience
         public override string GetInfo()
         {
             string ret = base.GetInfo();
-            if (requiredTrait != "" && requiredTrait != "NA")
+            if (requiredSkills != "" && requiredSkills != "NA")
             {
                 ret += "\n";
-                ret += "<color=#DD8800>Requires at least one " + requiredTrait + ".</color>";
+                ret += "<color=#DD8800>Requires at least one " + requiredSkills + ".</color>";
             }
             return ret;
 #if false
