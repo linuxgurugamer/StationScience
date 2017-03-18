@@ -407,7 +407,6 @@ namespace StationScience.Contracts
 
         public override bool MeetRequirements()
         {
-            StnSciScenario.Log("Checking MeetRequirements");
             CelestialBodySubtree progress = null;
             foreach (var node in ProgressTracking.Instance.celestialBodyNodes)
             {
@@ -419,7 +418,6 @@ namespace StationScience.Contracts
                 StnSciScenario.LogError("ProgressNode for Kerbin not found, terminating");
                 return false;
             }
-            StnSciScenario.Log("Checking lab and a docking port");
             if (progress.orbit.IsComplete && 
                   ( IsPartUnlocked("dockingPort1") ||
                    IsPartUnlocked("dockingPort2") ||
