@@ -16,14 +16,10 @@
 */
 
 using System;
-using System.IO;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using Contracts;
-using Contracts.Parameters;
-using KSP;
+using KSP.Localization;
 using KSPAchievements;
 
 // Thanks to MrHappyFace for the intial code I used to figure out Contracts
@@ -148,12 +144,11 @@ namespace StationScience.Contracts
 
         protected override bool Generate()
         {
-            Debug.Log("Fish");
-            StnSciScenario.Log("Considering a StatSci contract");
+            //StnSciScenario.Log("Considering a StatSci contract");
             if (ActiveCount() >= StnSciScenario.Instance.settings.maxContracts)
             {
-                StnSciScenario.Log("StationScience contracts cap hit (" +
-                    StnSciScenario.Instance.settings.maxContracts + ").");
+                /*StnSciScenario.Log("StationScience contracts cap hit (" +
+                    StnSciScenario.Instance.settings.maxContracts + ").");*/
                 return false;
             }
             double xp = StnSciScenario.Instance.xp + Reputation.Instance.reputation * StnSciScenario.Instance.settings.reputationFactor;
@@ -288,7 +283,7 @@ namespace StationScience.Contracts
                   (exp == null || sscon.experimentType != null) &&
                   (body == null || sscon.targetBody != null) &&
                   ((exp == null || exp == sscon.experimentType.name) &&
-                   (body == null || body.theName == sscon.targetBody.theName)))
+                   (body == null || body.name == sscon.targetBody.name)))
                     ret += 1;
             }
             return ret;
@@ -315,7 +310,7 @@ namespace StationScience.Contracts
                   (exp == null || sscon.experimentType != null) &&
                   (body == null || sscon.targetBody != null) &&
                   ((exp == null || exp == sscon.experimentType.name) &&
-                   (body == null || body.theName == sscon.targetBody.theName)))
+                   (body == null || body.name == sscon.targetBody.name)))
                     ret += 1;
             }
             return ret;
@@ -358,20 +353,20 @@ namespace StationScience.Contracts
         }
         protected override string GetTitle()
         {
-            return "Perform " + experimentType.title + " in orbit around " + targetBody.theName;
+            return Localizer.Format("Perform <<1>> in orbit around <<2>>", experimentType.title, targetBody.name);
         }
         protected override string GetDescription()
         {
             //those 3 strings appear to do nothing
-            return TextGen.GenerateBackStories(Agent.Name, Agent.GetMindsetString(), "experiment", "station", "kill all humans", new System.Random().Next());
+            return TextGen.GenerateBackStories("Station Science", Agent.Name, "station science experiment", experimentType.title, new System.Random().Next(), true, true, true);
         }
         protected override string GetSynopsys()
         {
-            return "We need you to complete " + experimentType.title + " in orbit around " + targetBody.theName + ", and return it to Kerbin for recovery";
+            return Localizer.Format("We need you to complete <<1>> in orbit around <<2>>, and return it to Kerbin for recovery", experimentType.title, targetBody.name);
         }
         protected override string MessageCompleted()
         {
-            return "You have successfully performed " + experimentType.title + " in orbit around " + targetBody.theName;
+            return Localizer.Format("You have successfully performed <<1>> in orbit around <<2>>" + experimentType.title + "" + targetBody.name);
         }
 
         protected override void OnCompleted()

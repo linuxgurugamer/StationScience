@@ -129,8 +129,8 @@ namespace StationScience
             base.ReviewData();
         }
 
-        [KSPField(guiActive = true, guiName = "Status", isPersistant = false)]
-        public string status;
+        //[KSPField(guiActive = true, guiName = "Status", isPersistant = false)]
+        //public string status;
 
         public void addDataButton(ScienceData sd, IScienceDataContainer cont)
         {

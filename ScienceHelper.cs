@@ -90,7 +90,7 @@ namespace StationScience
             CelestialBody body = vessel.mainBody;
             string biome = "";
             if(vessel.LandedOrSplashed) biome = vessel.landedAt;
-            ScienceSubject subject = ResearchAndDevelopment.GetExperimentSubject(experiment, situation, body, biome);
+            ScienceSubject subject = ResearchAndDevelopment.GetExperimentSubject(experiment, situation, body, biome, biome);
             return subject;
         }
     }

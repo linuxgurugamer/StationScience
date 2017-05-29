@@ -23,135 +23,11 @@ using UnityEngine;
 using KSP;
 using Contracts;
 using Contracts.Parameters;
+using KSP.Localization;
 
 namespace StationScience.Contracts.Parameters
 {
-    /*
-    public class UnlockPartsParameter : ContractParameter
-    {
-        List<AvailablePart> parts;
-
-        public UnlockPartsParameter()
-        {
-            this.Enabled = true;
-            this.DisableOnStateChange = true;
-            this.parts = new List<AvailablePart>();
-        }
-
-        public UnlockPartsParameter(IEnumerable<AvailablePart> p)
-        {
-            this.Enabled = true;
-            this.DisableOnStateChange = true;
-            SetParts(p);
-            doUpdate();
-        }
-
-        public UnlockPartsParameter(string p)
-        {
-            this.Enabled = true;
-            this.DisableOnStateChange = true;
-            SetParts(p);
-            doUpdate();
-        }
-
-        public void SetParts(IEnumerable<AvailablePart> p)
-        {
-            this.parts = new List<AvailablePart>(p);
-        }
-
-        public void SetParts(string p)
-        {
-            this.parts = new List<AvailablePart>();
-            foreach (string s in p.Split(','))
-            {
-                AvailablePart a = PartLoader.getPartInfoByName(s);
-                if (a != null)
-                    this.parts.Add(a);
-                else
-                    StnSciScenario.LogError("Part not found: " + s);
-            }
-        }
-
-        public List<AvailablePart> GetParts()
-        {
-            return new List<AvailablePart>(this.parts);
-        }
-
-        protected override string GetHashString()
-        {
-            return "test";
-        }
-
-        public string GetReadableList()
-        {
-            StringBuilder ret = new StringBuilder("");
-            for (int i = 0; i < this.parts.Count; i++)
-            {
-                if (i > 0)
-                {
-                    if (i == this.parts.Count - 1)
-                        ret.Append(" and ");
-                    else
-                        ret.Append(", ");
-                }
-                ret.Append(this.parts[i].title);
-            }
-            return ret.ToString();
-        }
-
-        public string GetNameList()
-        {
-            return string.Join(",", parts.Select(part => part.name).ToArray());
-        }
-
-        protected override string GetTitle()
-        {
-            return "Research " + GetReadableList();
-        }
-
-        protected override void OnRegister()
-        {
-            GameEvents.OnPartPurchased.Add(OnPartPurchased);
-            GameEvents.OnTechnologyResearched.Add(OnTechnologyResearched);
-        }
-        protected override void OnUnregister()
-        {
-            GameEvents.OnPartPurchased.Remove(OnPartPurchased);
-            GameEvents.OnTechnologyResearched.Remove(OnTechnologyResearched);
-        }
-
-        private void OnPartPurchased(AvailablePart a)
-        {
-            doUpdate();
-        }
-
-        private void OnTechnologyResearched(GameEvents.HostTargetAction<RDTech, RDTech.OperationResult> a)
-        {
-            doUpdate();
-        }
-
-        private void doUpdate()
-        {
-            if (parts.All(part => ResearchAndDevelopment.PartTechAvailable(part) && ResearchAndDevelopment.PartModelPurchased(part)))
-                SetComplete();
-            else
-                SetIncomplete();
-        }
-
-        protected override void OnSave(ConfigNode node)
-        {
-            base.OnSave(node);
-            node.AddValue("parts", GetNameList());
-        }
-        protected override void OnLoad(ConfigNode node)
-        {
-            base.OnLoad(node);
-            string parts = node.GetValue("parts");
-            SetParts(parts);
-            doUpdate();
-        }
-    }*/
-
+    
     public interface PartRelated
     {
         AvailablePart GetPartType();
@@ -202,14 +78,13 @@ namespace StationScience.Contracts.Parameters
 
         protected override string GetTitle()
         {
-            return "Complete " + experimentType.title + " in orbit around " + targetBody.theName;
+            return Localizer.Format("Complete <<1>> in orbit around <<2>>", experimentType.title, targetBody.GetDisplayName());
         }
 
         protected override string GetNotes()
         {
-            return "Launch a new experiment part (" + experimentType.title +
-                "), bring it into orbit around " + targetBody.theName +
-                ", complete the experiment, return it (with results inside) to Kerbin and recover it";
+            return Localizer.Format("Launch a new experiment part (<<1>>), bring it into orbit around <<2>>, "+
+                "complete the experiment, return it (with results inside) to Kerbin and recover it", experimentType.title, targetBody.GetDisplayName());
         }
 
         private bool SetExperiment(string exp)
@@ -334,7 +209,7 @@ namespace StationScience.Contracts.Parameters
             if(!((arg.from == Vessel.Situations.LANDED || arg.from == Vessel.Situations.PRELAUNCH) &&
                   (arg.to == Vessel.Situations.FLYING || arg.to == Vessel.Situations.SUB_ORBITAL)))
                 return;
-            if (arg.host.mainBody.theName != "Kerbin")
+            if (arg.host.mainBody.name != "Kerbin")
                 return;
             AvailablePart experimentType = StnSciParameter.getExperimentType(this);
             if (experimentType == null)
@@ -431,7 +306,7 @@ namespace StationScience.Contracts.Parameters
             if (targetBody == null)
                 return "Complete in orbit";
             else
-                return "Complete in orbit around " + targetBody.theName;
+                return Localizer.Format("Complete in orbit around <<1>>", targetBody.GetDisplayName());
         }
 
         private float lastUpdate = 0;
