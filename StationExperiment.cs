@@ -15,6 +15,7 @@
     along with Station Science.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace StationScience
         [KSPField(isPersistant = false)]
         public float kuarqHalflife;
 
-        [KSPField(isPersistant = false, guiName = "Decay rate", guiUnits = " kuarqs/s", guiActive = false, guiFormat = "F2")]
+        [KSPField(isPersistant = false, guiName = "#autoLOC_StatSci_Decay", guiUnits = "#autoLOC_StatSci_Decayrate", guiActive = false, guiFormat = "F2")]
         public float kuarqDecay;
 
         [KSPField(isPersistant = false)]
@@ -47,43 +48,44 @@ namespace StationScience
         [KSPField(isPersistant = true)]
         public string last_subjectId = "";
 
-        public static bool checkBoring(Vessel vessel, bool msg = false)
+        public static bool CheckBoring(Vessel vessel, bool msg = false)
         {
             //print(vessel.Landed + ", " + vessel.landedAt + ", " + vessel.launchTime + ", " + vessel.situation + ", " + vessel.orbit.referenceBody.name);
             if ((vessel.orbit.referenceBody.name == "Kerbin") && (vessel.situation == Vessel.Situations.LANDED || vessel.situation == Vessel.Situations.PRELAUNCH || vessel.situation == Vessel.Situations.SPLASHED || vessel.altitude <= vessel.orbit.referenceBody.atmosphereDepth))
             {
+                StnSciScenario.Log("in boring place");
                 if (msg)
-                    ScreenMessages.PostScreenMessage("Too boring here. Go to space!", 6, ScreenMessageStyle.UPPER_CENTER);
+                    ScreenMessages.PostScreenMessage(Localizer.Format("#autoLOC_StatSci_screen_boring"), 6, ScreenMessageStyle.UPPER_CENTER);
                 return true;
             }
             return false;
         }
 
-        public PartResource getResource(string name)
+        public PartResource GetResource(string name)
         {
             return ResourceHelper.getResource(part, name);
         }
 
-        public double getResourceAmount(string name)
+        public double GetResourceAmount(string name)
         {
             return ResourceHelper.getResourceAmount(part, name);
         }
 
-        public double getResourceMaxAmount(string name)
+        public double GetResourceMaxAmount(string name)
         {
             return ResourceHelper.getResourceMaxAmount(part, name);
         }
 
-        public PartResource setResourceMaxAmount(string name, double max)
+        public PartResource SetResourceMaxAmount(string name, double max)
         {
             return ResourceHelper.setResourceMaxAmount(part, name, max);
         }
 
-        public bool finished()
+        public bool Finished()
         {
-            double numEurekas = getResourceAmount("Eurekas");
-            double numKuarqs = getResourceAmount("Kuarqs");
-            double numBioproducts = getResourceAmount("Bioproducts");
+            double numEurekas = GetResourceAmount("Eurekas");
+            double numKuarqs = GetResourceAmount("Kuarqs");
+            double numBioproducts = GetResourceAmount("Bioproducts");
             //print(part.partInfo.title + " Eurekas: " + numEurekas + "/" + eurekasRequired);
             //print(part.partInfo.title + " Kuarqs: " + numKuarqs + "/" + kuarqsRequired);
             //print(part.partInfo.title + " Bioproducts: " + numBioproducts + "/" + bioproductsRequired);
@@ -95,40 +97,41 @@ namespace StationScience
             base.OnStart(state);
             if (state == StartState.Editor) { return; }
             Fields["kuarqDecay"].guiActive = (kuarqsRequired > 0 && kuarqHalflife > 0);
-            Events["DeployExperiment"].active = finished();
+            Events["DeployExperiment"].active = Finished();
             this.part.force_activate();
-            StartCoroutine(updateStatus());
+            StartCoroutine(UpdateStatus());
             //Actions["DeployAction"].active = false;
         }
 
-        [KSPEvent(guiActive = true, guiName = "Start Experiment", active = true)]
+        [KSPEvent(guiActive = true, guiName = "#autoLOC_StatSci_startExp", active = true)]
         public void StartExperiment()
         {
             if (GetScienceCount() > 0)
             {
-                ScreenMessages.PostScreenMessage("Experiment already finalized.", 6, ScreenMessageStyle.UPPER_CENTER);
+                ScreenMessages.PostScreenMessage(Localizer.Format("#autoLOC_StatSci_screen_finalized"), 6, ScreenMessageStyle.UPPER_CENTER);
                 return;
             }
-            if (checkBoring(vessel, true)) return;
-            PartResource eurekas = setResourceMaxAmount("Eurekas", eurekasRequired);
-            PartResource kuarqs = setResourceMaxAmount("Kuarqs", kuarqsRequired);
-            PartResource bioproducts = setResourceMaxAmount("Bioproducts", bioproductsRequired);
+            if (CheckBoring(vessel, true)) return;
+            PartResource eurekas = SetResourceMaxAmount("Eurekas", eurekasRequired);
+            PartResource kuarqs = SetResourceMaxAmount("Kuarqs", kuarqsRequired);
+            PartResource bioproducts = SetResourceMaxAmount("Bioproducts", bioproductsRequired);
             if (eurekas.amount == 0 && bioproducts != null) bioproducts.amount = 0;
             Events["StartExperiment"].active = false;
-            ScreenMessages.PostScreenMessage("Started experiment!", 6, ScreenMessageStyle.UPPER_CENTER);
+            ScreenMessages.PostScreenMessage(Localizer.Format("#autoLOC_StatSci_screen_started"), 6, ScreenMessageStyle.UPPER_CENTER);
         }
 
-        [KSPAction("Start Experiment")]
+        [KSPAction("#autoLOC_StatSci_startExp")]
         public void StartExpAction(KSPActionParam p)
         {
+            StnSciScenario.Log("in startExperiment(arg)");
             StartExperiment();
         }
 
 
-        public bool deployChecks()
+        public bool DeployChecks()
         {
-            if (checkBoring(vessel, true)) return false;
-            if (finished())
+            if (CheckBoring(vessel, true)) return false;
+            if (Finished())
             {
                 Events["DeployExperiment"].active = false;
                 Events["StartExperiment"].active = false;
@@ -136,41 +139,41 @@ namespace StationScience
             }
             else
             {
-                ScreenMessages.PostScreenMessage("Experiment not finished yet!", 6, ScreenMessageStyle.UPPER_CENTER);
+                ScreenMessages.PostScreenMessage("#autoLOC_StatSci_screen_notfinished", 6, ScreenMessageStyle.UPPER_CENTER);
             }
             return false;
         }
 
         new public void DeployExperiment()
         {
-            if (deployChecks())
+            if (DeployChecks())
                 base.DeployExperiment();
         }
 
         new public void DeployAction(KSPActionParam p)
         {
-            if (deployChecks())
+            if (DeployChecks())
                 base.DeployAction(p);
         }
 
         new public void ResetExperiment()
         {
             base.ResetExperiment();
-            stopResearch("Bioproducts");
+            StopResearch("Bioproducts");
             Events["StartExperiment"].active = true;
         }
 
         new public void ResetExperimentExternal()
         {
             base.ResetExperimentExternal();
-            stopResearch("Bioproducts");
+            StopResearch("Bioproducts");
             Events["StartExperiment"].active = true;
         }
 
         new public void ResetAction(KSPActionParam p)
         {
             base.ResetAction(p);
-            stopResearch("Bioproducts");
+            StopResearch("Bioproducts");
             Events["StartExperiment"].active = true;
         }
 
@@ -179,7 +182,7 @@ namespace StationScience
             base.OnFixedUpdate();
             if (kuarqHalflife > 0 && kuarqsRequired > 0)
             {
-                var kuarqs = getResource("Kuarqs");
+                var kuarqs = GetResource("Kuarqs");
                 if (kuarqs != null && kuarqs.amount < (.99 * kuarqsRequired))
                 {
                     double decay = Math.Pow(.5, TimeWarp.fixedDeltaTime / kuarqHalflife);
@@ -191,30 +194,30 @@ namespace StationScience
             }
         }
 
-        public void stopResearch(string resName)
+        public void StopResearch(string resName)
         {
-            setResourceMaxAmount(resName, 0);
+            SetResourceMaxAmount(resName, 0);
         }
 
-        public void stopResearch()
+        public void StopResearch()
         {
-            stopResearch("Eurekas");
-            stopResearch("Kuarqs");
+            StopResearch("Eurekas");
+            StopResearch("Kuarqs");
         }
 
-        public System.Collections.IEnumerator updateStatus()
+        public System.Collections.IEnumerator UpdateStatus()
         {
             while (true)
             {
                 //print(part.partInfo.title + "updateStatus");
-                double numEurekas = getResourceAmount("Eurekas");
-                double numEurekasMax = getResourceMaxAmount("Eurekas");
-                double numKuarqs = getResourceAmount("Kuarqs");
-                double numKuarqsMax = getResourceMaxAmount("Kuarqs");
-                double numBioproducts = getResourceAmount("Bioproducts");
+                double numEurekas = GetResourceAmount("Eurekas");
+                double numEurekasMax = GetResourceMaxAmount("Eurekas");
+                double numKuarqs = GetResourceAmount("Kuarqs");
+                double numKuarqsMax = GetResourceMaxAmount("Kuarqs");
+                double numBioproducts = GetResourceAmount("Bioproducts");
                 int sciCount = GetScienceCount();
                 //print(part.partInfo.title + " finished: " + finished());
-                if (!finished())
+                if (!Finished())
                 {
                     Events["DeployExperiment"].active = false;
                     Events["StartExperiment"].active = (!Inoperable && sciCount == 0 && numEurekasMax == 0 && numKuarqsMax == 0);
@@ -228,14 +231,14 @@ namespace StationScience
                 string subjectId = ((subject == null) ? "" : subject.id);
                 if(subjectId != "" && last_subjectId != "" && last_subjectId != subjectId &&
                     (numEurekas > 0 || numKuarqs > 0 || (numBioproducts > 0 && sciCount == 0))) {
-                    ScreenMessages.PostScreenMessage("Location changed mid-experiment! " + part.partInfo.title + " ruined.", 6, ScreenMessageStyle.UPPER_CENTER);
-                    stopResearch();
-                    stopResearch("Bioproducts");
+                    ScreenMessages.PostScreenMessage(Localizer.Format("#autoLOC_StatSci_screen_locchange", part.partInfo.title), 6, ScreenMessageStyle.UPPER_CENTER);
+                    StopResearch();
+                    StopResearch("Bioproducts");
                 }
                 last_subjectId = subjectId;
                 if (sciCount > 0)
                 {
-                    stopResearch();
+                    StopResearch();
                     if (completed == 0)
                         completed = (float) Planetarium.GetUniversalTime();
                 }
@@ -244,7 +247,7 @@ namespace StationScience
                     var eurekasModules = vessel.FindPartModulesImplementing<StationScienceModule>();
                     if (eurekasModules == null || eurekasModules.Count() < 1)
                     {
-                        ScreenMessages.PostScreenMessage("Warning: " + part.partInfo.title + " has detached from the station without being finalized.", 2, ScreenMessageStyle.UPPER_CENTER);
+                        ScreenMessages.PostScreenMessage(Localizer.Format("#autoLOC_StatSci_screen_detatch", part.partInfo.title), 2, ScreenMessageStyle.UPPER_CENTER);
                     }
                 }
                 /*
@@ -259,7 +262,7 @@ namespace StationScience
                 */
                 if (numBioproducts > 0 && Inoperable)
                 {
-                    stopResearch("Bioproducts");
+                    StopResearch("Bioproducts");
                 }
                 if (bioproductsRequired > 0 && GetScienceCount() > 0 && numBioproducts < bioproductsRequired)
                 {
@@ -275,34 +278,34 @@ namespace StationScience
             string reqLab = "", reqCyclo = "", reqZoo = "";
             if (eurekasRequired > 0)
             {
-                ret += "Eurekas required: " + eurekasRequired;
-                reqLab = "\n<color=#DD8800>Requires a TH-NKR Research Lab</color>";
+                ret += Localizer.Format("#autoLOC_StatSci_EuReq", eurekasRequired);
+                reqLab = Localizer.Format("#autoLOC_StatSci_LabReq");
             }
             if (kuarqsRequired > 0)
             {
                 if (ret != "") ret += "\n";
-                ret += "Kuarqs required: " + kuarqsRequired;
+                ret += Localizer.Format("#autoLOC_StatSci_KuarkReq", kuarqsRequired);
                 double productionRequired = 0.01;
                 if (kuarqHalflife > 0)
                 {
                     if (ret != "") ret += "\n";
-                    ret += "Kuarq decay halflife: " + kuarqHalflife + " seconds" + "\n";
+                    ret += Localizer.Format("#autoLOC_StatSci_KuarkHalf", kuarqHalflife);
                     productionRequired = kuarqsRequired * (1 - Math.Pow(.5, 1.0 / kuarqHalflife));
-                    ret += String.Format("Production required: {0:F2} kuarq/s", productionRequired);
+                    ret += Localizer.Format("#autoLOC_StatSci_KuarkProd", productionRequired);
                 }
                 if (productionRequired > 1)
-                    reqCyclo = "\n<color=#DD8800>Requires " + (Math.Ceiling(productionRequired)) + " D-ZZY Cyclotrons</color>";
+                    reqCyclo = Localizer.Format("#autoLOC_StatSci_CycReqM", Math.Ceiling(productionRequired));
                 else
-                    reqCyclo = "\n<color=#DD8800>Requires a D-ZZY Cyclotron</color>";
+                    reqCyclo = Localizer.Format("#autoLOC_StatSci_CycReq");
             }
             if (bioproductsRequired > 0)
             {
                 if (ret != "") ret += "\n";
-                ret += "Bioproducts required: " + bioproductsRequired;
+                ret += Localizer.Format("#autoLOC_StatSci_BioReq", bioproductsRequired);
                 double bioproductDensity = ResourceHelper.getResourceDensity("Bioproducts");
                 if (bioproductDensity > 0)
-                    ret += String.Format("\nMass when complete: {0:G} t", Math.Round(bioproductsRequired * bioproductDensity + part.mass,2));
-                reqZoo = "\n<color=#DD8800>Requires a F-RRY Zoology Bay</color>";
+                    ret += Localizer.Format("#autoLOC_StatSci_BioMass", Math.Round(bioproductsRequired * bioproductDensity + part.mass,2));
+                reqZoo = Localizer.Format("#autoLOC_StatSci_ZooReq");
             }
             return ret + reqLab + reqCyclo + reqZoo + "\n\n" + base.GetInfo();
         }

@@ -15,6 +15,7 @@
     along with Station Science.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace StationScience
         [KSPField(isPersistant = false)]
         public float kuarqHalflife = 0;
 
-        [KSPField(isPersistant = false, guiName = "Decay rate", guiUnits = " kuarqs/s", guiActive = false, guiFormat = "F2")]
+        [KSPField(isPersistant = false, guiName = "#autoLOC_StatSci_Decay", guiUnits = "#autoLOC_StatSci_Decayrate", guiActive = false, guiFormat = "F2")]
         public float kuarqDecay = 0;
 
         [KSPField(isPersistant = false)]
@@ -43,24 +44,28 @@ namespace StationScience
         public int lightsMode = 1;
         // 0: force off; 1: auto; 2: force on
 
+        string lightsOn = Localizer.Format("#autoLOC_StatSci_LightsOn");
+        string lightsOff = Localizer.Format("#autoLOC_StatSci_LightsOff");
+        string lightsAuto = Localizer.Format("#autoLOC_StatSci_LightsAuto");
+
         public void updateLightsMode()
         {
             switch (lightsMode)
             {
                 case 0:
-                    Events["LightsMode"].guiName = "Lights: Off";
+                    Events["LightsMode"].guiName = lightsOff;
                     break;
                 case 1:
-                    Events["LightsMode"].guiName = "Lights: Auto";
+                    Events["LightsMode"].guiName = lightsAuto;
                     break;
                 case 2:
-                    Events["LightsMode"].guiName = "Lights: On";
+                    Events["LightsMode"].guiName = lightsOn;
                     break;
             }
             updateLights();
         }
 
-        [KSPEvent(guiActive = true, guiName = "Lights: Auto", active = true)]
+        [KSPEvent(guiActive = true, guiName = "#autoLOC_StatSci_LightsAuto", active = true)]
         public void LightsMode()
         {
             lightsMode += 1;
@@ -89,7 +94,7 @@ namespace StationScience
             //print(sd.title);
             if (GetScienceCount() > 0)
             {
-                ScreenMessages.PostScreenMessage("Analyzer already full. Transmit the data!", 6, ScreenMessageStyle.UPPER_CENTER);
+                ScreenMessages.PostScreenMessage(Localizer.Format("#autoLOC_StatSci_screen_analyseFull"), 6, ScreenMessageStyle.UPPER_CENTER);
                 return;
             }
             cont.DumpData(sd);
@@ -112,7 +117,7 @@ namespace StationScience
             var kuarqs = getResourceAmount("Kuarqs");
             if (kuarqs > 0 && kuarqs < kuarqsRequired)
             {
-                ScreenMessages.PostScreenMessage("Analysis still in progress.", 6, ScreenMessageStyle.UPPER_CENTER);
+                ScreenMessages.PostScreenMessage(Localizer.Format("#autoLOC_StatSci_screen_analyseFull"), 6, ScreenMessageStyle.UPPER_CENTER);
                 return;
             }
             base.ReviewDataEvent();
@@ -123,7 +128,7 @@ namespace StationScience
             var kuarqs = getResourceAmount("Kuarqs");
             if (kuarqs > 0 && kuarqs < kuarqsRequired)
             {
-                ScreenMessages.PostScreenMessage("Analysis still in progress.", 6, ScreenMessageStyle.UPPER_CENTER);
+                ScreenMessages.PostScreenMessage(Localizer.Format("#autoLOC_StatSci_screen_analyseAct"), 6, ScreenMessageStyle.UPPER_CENTER);
                 return;
             }
             base.ReviewData();
@@ -206,15 +211,15 @@ namespace StationScience
                     if (kuarqs != null && kuarqs.maxAmount > 0 && kuarqs.amount < kuarqsRequired)
                     {
                         if (kuarqs.amount == 0)
-                            status = "Ready to analyze.";
+                            status = Localizer.Format("#autoLOC_StatSci_analyseReady");
                         else
-                            status = "Analyzing...";
+                            status = Localizer.Format("#autoLOC_StatSci_analysing");
                     }
                     else
-                        status = "Ready to transmit.";
+                        status = Localizer.Format("#autoLOC_StatSci_readyTrans");
                 }
                 else
-                    status = "Ready to transmit.";
+                    status = Localizer.Format("#autoLOC_StatSci_readyTrans");
             }
             else
             {
@@ -228,9 +233,9 @@ namespace StationScience
                     }
                 }
                 if (sampleEvents.Count == 0)
-                    status = "Nothing to analyze.";
+                    status = "#autoLOC_StatSci_analyseNothing";
                 else
-                    status = "Ready to analyze.";
+                    status = Localizer.Format("#autoLOC_StatSci_analyseReady");
             }
             updateLights();
         }
@@ -254,7 +259,7 @@ namespace StationScience
 
                     if (GetScienceCount() == 0)
                     {
-                        ScreenMessages.PostScreenMessage("Sample under analysis was transmitted away before completion.", 6, ScreenMessageStyle.UPPER_CENTER);
+                        ScreenMessages.PostScreenMessage(Localizer.Format("#autoLOC_StatSci_screen_transmitted"), 6, ScreenMessageStyle.UPPER_CENTER);
                         setResourceMaxAmount("Kuarqs", 0);
                     }
                     if (numKuarqs >= kuarqsRequired && GetScienceCount() > 0)
@@ -264,7 +269,7 @@ namespace StationScience
                         {
                             var sd = sdata[0];
                             sd.baseTransmitValue = txValue;
-                            ScreenMessages.PostScreenMessage("Analysis complete, and ready to transmit.", 6, ScreenMessageStyle.UPPER_CENTER);
+                            ScreenMessages.PostScreenMessage(Localizer.Format("#autoLOC_StatSci_screen_anaComp"), 6, ScreenMessageStyle.UPPER_CENTER);
                             setResourceMaxAmount("Kuarqs", 0);
                             Events["ReviewDataEvent"].guiActive = true;
                         }
@@ -323,21 +328,21 @@ namespace StationScience
         {
             string ret = "";
             string reqCyclo = "";
-            ret += "Improved Transmit Quality: <color=#22DD44>" + Math.Round(txValue * 100) + "%</color>";
+            ret += Localizer.Format("#autoLOC_StatSci_analyseImp" + Math.Round(txValue * 100));
             if (kuarqsRequired > 0)
             {
-                ret += "\n\nKuarqs required: " + kuarqsRequired;
+                ret += "\n\n"+ Localizer.Format("autoLOC_StatSci_KuarkReq") + kuarqsRequired;
                 double productionRequired = 0.01;
                 if (kuarqHalflife > 0)
                 {
-                    ret += "\nKuarq decay halflife: " + kuarqHalflife + " seconds" + "\n";
+                    ret += Localizer.Format("#autoLOC_StatSci_KuarkHalf", kuarqHalflife);
                     productionRequired = kuarqsRequired * (1 - Math.Pow(.5, 1.0 / kuarqHalflife));
-                    ret += String.Format("Production required: {0:F2} kuarq/s", productionRequired);
+                    ret += Localizer.Format("#autoLOC_StatSci_KuarkProd", productionRequired);
                 }
                 if (productionRequired > 1)
-                    reqCyclo = "\n<color=#DD8800>Requires " + (Math.Ceiling(productionRequired)) + " D-ZZY Cyclotrons</color>";
+                    reqCyclo = Localizer.Format("#autoLOC_StatSci_CycReqM", (Math.Ceiling(productionRequired)));
                 else
-                    reqCyclo = "\n<color=#DD8800>Requires a D-ZZY Cyclotron</color>";
+                    reqCyclo = Localizer.Format("#autoLOC_StatSci_CycReq");
             }
             return ret + reqCyclo;
         }

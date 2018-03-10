@@ -144,7 +144,7 @@ namespace StationScience.Contracts
 
         protected override bool Generate()
         {
-            //StnSciScenario.Log("Considering a StatSci contract");
+            StnSciScenario.Log("Considering a StatSci contract");
             if (ActiveCount() >= StnSciScenario.Instance.settings.maxContracts)
             {
                 /*StnSciScenario.Log("StationScience contracts cap hit (" +
@@ -353,7 +353,7 @@ namespace StationScience.Contracts
         }
         protected override string GetTitle()
         {
-            return Localizer.Format("Perform <<1>> in orbit around <<2>>", experimentType.title, targetBody.name);
+            return Localizer.Format("#autoLOC_StatSciContract_Title", experimentType.title, targetBody.name);
         }
         protected override string GetDescription()
         {
@@ -362,11 +362,11 @@ namespace StationScience.Contracts
         }
         protected override string GetSynopsys()
         {
-            return Localizer.Format("We need you to complete <<1>> in orbit around <<2>>, and return it to Kerbin for recovery", experimentType.title, targetBody.name);
+            return Localizer.Format("#autoLOC_StatSciContract_Blurb", experimentType.title, targetBody.name);
         }
         protected override string MessageCompleted()
         {
-            return Localizer.Format("You have successfully performed <<1>> in orbit around <<2>>" + experimentType.title + "" + targetBody.name);
+            return Localizer.Format("#autoLOC_StatSciContract_Completed", experimentType.title, targetBody.name);
         }
 
         protected override void OnCompleted()

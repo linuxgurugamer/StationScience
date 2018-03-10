@@ -9,3 +9,6 @@
 /obj/Debug
 /Kerbal Space Program/StationScience.zip
 /Properties/AssemblyInfo.cs
+/bin/Release
+/.vs/StationScience/v15/Server/sqlite3
+/obj/Release

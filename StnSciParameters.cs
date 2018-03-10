@@ -78,13 +78,12 @@ namespace StationScience.Contracts.Parameters
 
         protected override string GetTitle()
         {
-            return Localizer.Format("Complete <<1>> in orbit around <<2>>", experimentType.title, targetBody.GetDisplayName());
+            return Localizer.Format("#autoLOC_StatSciParam_Title", experimentType.title, targetBody.GetDisplayName());
         }
 
         protected override string GetNotes()
         {
-            return Localizer.Format("Launch a new experiment part (<<1>>), bring it into orbit around <<2>>, "+
-                "complete the experiment, return it (with results inside) to Kerbin and recover it", experimentType.title, targetBody.GetDisplayName());
+            return Localizer.Format("#autoLOC_StatSciParam_Notes", experimentType.title, targetBody.GetDisplayName());
         }
 
         private bool SetExperiment(string exp)
@@ -169,8 +168,8 @@ namespace StationScience.Contracts.Parameters
         {
             AvailablePart experimentType = StnSciParameter.getExperimentType(this);
             if (experimentType == null)
-                return "Launch new experiment pod";
-            return "Launch new " + experimentType.title;
+                return Localizer.Format("#autoLOC_StatSciNewPod_TitleA");
+            return Localizer.Format("#autoLOC_StatSciNewPod_TitleB", experimentType.title);
         }
 
         protected override void OnRegister()
@@ -298,15 +297,15 @@ namespace StationScience.Contracts.Parameters
 
         protected override string GetHashString()
         {
-            return "do experiment " + this.GetHashCode();
+            return Localizer.Format("#autoLOC_StatSciDoExp_Hash", this.GetHashCode());
         }
         protected override string GetTitle()
         {
             CelestialBody targetBody = StnSciParameter.getTargetBody(this);
             if (targetBody == null)
-                return "Complete in orbit";
+                return Localizer.Format("#autoLOC_StatSciDoExp_TitleA");
             else
-                return Localizer.Format("Complete in orbit around <<1>>", targetBody.GetDisplayName());
+                return Localizer.Format("#autoLOC_StatSciDoExp_TitleB", targetBody.GetDisplayName());
         }
 
         private float lastUpdate = 0;
@@ -381,7 +380,7 @@ namespace StationScience.Contracts.Parameters
         }
         protected override string GetTitle()
         {
-            return "Recover at Kerbin";
+            return Localizer.Format("#autoLOC_StatSciRetParam_Title");
         }
 
         protected override void OnRegister()

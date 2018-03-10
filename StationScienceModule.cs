@@ -15,6 +15,7 @@
     along with Station Science.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace StationScience
         [KSPField]
         public double experienceBonus = 0.5;
 
-        public bool checkSkill()
+        public bool CheckSkill()
         {
             if (requiredSkills == "" || requiredSkills == "NA")
                 return true;
@@ -73,12 +74,12 @@ namespace StationScience
             if (IsActivated && (curTime = UnityEngine.Time.realtimeSinceStartup) - lastCheck > 0.1)
             {
                 lastCheck = curTime;
-                if (!checkSkill())
+                if (!CheckSkill())
                 {
                     StopResourceConverter();
                     this.status = "Inactive; no " + requiredSkills;
                 }
-                else if (StationExperiment.checkBoring(vessel, false))
+                else if (StationExperiment.CheckBoring(vessel, false))
                 {
                     StopResourceConverter();
                     this.status = "Inactive; on Kerbin";
@@ -115,7 +116,7 @@ namespace StationScience
         }
 #endif
 
-        private V getOrDefault<K, V>(Dictionary<K, V> dict, K key)
+        private V GetOrDefault<K, V>(Dictionary<K, V> dict, K key)
         {
             try
             {
@@ -127,9 +128,9 @@ namespace StationScience
             }
         }
 
-        private void updateStatus()
+        private void UpdateStatus()
         {
-            updateLights();
+            UpdateLights();
 #if false
             bool animActive = false;
             if (!doResearch)
@@ -260,7 +261,7 @@ namespace StationScience
             base.PostProcess(result, deltaTime);
             actuallyProducing = (result.TimeFactor > 0);
             if(lightsMode == 1)
-                updateLights();
+                UpdateLights();
             if (lastRecipe == null)
                 return;
             /*
@@ -275,7 +276,7 @@ namespace StationScience
             */
         }
 
-        void updateLights()
+        void UpdateLights()
         {
             if (animator != null)
             {
@@ -326,34 +327,38 @@ namespace StationScience
             if (state == StartState.Editor) { return; }
             this.part.force_activate();
 
-            updateLightsMode();
+            UpdateLightsMode();
             //StartCoroutine(doUpdateStatus());
         }
 
-        public void updateLightsMode()
+        string lightsOn = Localizer.Format("#autoLOC_StatSci_LightsOn");
+        string lightsOff = Localizer.Format("#autoLOC_StatSci_LightsOff");
+        string lightsAuto = Localizer.Format("#autoLOC_StatSci_LightsAuto");
+
+        public void UpdateLightsMode()
         {
             switch (lightsMode)
             {
                 case 0:
-                    Events["LightsMode"].guiName = "Lights: Off";
+                    Events["LightsMode"].guiName = lightsOff;
                     break;
                 case 1:
-                    Events["LightsMode"].guiName = "Lights: Auto";
+                    Events["LightsMode"].guiName = lightsAuto;
                     break;
                 case 2:
-                    Events["LightsMode"].guiName = "Lights: On";
+                    Events["LightsMode"].guiName = lightsOn;
                     break;
             }
-            updateLights();
+            UpdateLights();
         }
 
-        [KSPEvent(guiActive = true, guiName = "Lights: Auto", active = true)]
+        [KSPEvent(guiActive = true, guiName = "#autoLOC_StatSci_LightsAuto", active = true)]
         public void LightsMode()
         {
             lightsMode += 1;
             if (lightsMode > 2)
                 lightsMode = 0;
-            updateLightsMode();
+            UpdateLightsMode();
         }
 
         public override string GetInfo()
@@ -361,8 +366,7 @@ namespace StationScience
             string ret = base.GetInfo();
             if (requiredSkills != "" && requiredSkills != "NA")
             {
-                ret += "\n";
-                ret += "<color=#DD8800>Requires at least one " + requiredSkills + ".</color>";
+                ret += Localizer.Format("autoLOC_StatSci_skillReq", requiredSkills);
             }
             return ret;
 #if false
