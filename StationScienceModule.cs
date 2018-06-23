@@ -366,7 +366,7 @@ namespace StationScience
             string ret = base.GetInfo();
             if (requiredSkills != "" && requiredSkills != "NA")
             {
-                ret += Localizer.Format("autoLOC_StatSci_skillReq", requiredSkills);
+                ret += Localizer.Format("#autoLOC_StatSci_skillReq", requiredSkills);
             }
             return ret;
 #if false
