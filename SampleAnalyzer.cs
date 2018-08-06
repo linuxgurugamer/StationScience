@@ -331,7 +331,7 @@ namespace StationScience
             ret += Localizer.Format("#autoLOC_StatSci_analyseImp", Math.Round(txValue * 100));
             if (kuarqsRequired > 0)
             {
-                ret += "\n\n"+ Localizer.Format("#autoLOC_StatSci_KuarkReq", kuarqsRequired);
+                ret += "\n"+ Localizer.Format("#autoLOC_StatSci_KuarkReq", kuarqsRequired);
                 double productionRequired = 0.01;
                 if (kuarqHalflife > 0)
                 {
