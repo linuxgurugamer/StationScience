@@ -335,9 +335,9 @@ namespace StationScience
                 double productionRequired = 0.01;
                 if (kuarqHalflife > 0)
                 {
-                    ret += Localizer.Format("#autoLOC_StatSci_KuarkHalf", kuarqHalflife);
+                    ret += "\n" + Localizer.Format("#autoLOC_StatSci_KuarkHalf", kuarqHalflife);
                     productionRequired = kuarqsRequired * (1 - Math.Pow(.5, 1.0 / kuarqHalflife));
-                    ret += Localizer.Format("#autoLOC_StatSci_KuarkProd", productionRequired);
+                    ret += "\n" + Localizer.Format("#autoLOC_StatSci_KuarkProd", productionRequired);
                 }
                 if (productionRequired > 1)
                     reqCyclo = Localizer.Format("#autoLOC_StatSci_CycReqM", (Math.Ceiling(productionRequired)));
