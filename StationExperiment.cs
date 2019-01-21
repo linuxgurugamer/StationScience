@@ -291,6 +291,7 @@ namespace StationScience
                     if (ret != "") ret += "\n";
                     ret += Localizer.Format("#autoLOC_StatSci_KuarkHalf", kuarqHalflife);
                     productionRequired = kuarqsRequired * (1 - Math.Pow(.5, 1.0 / kuarqHalflife));
+                    ret += "\n";
                     ret += Localizer.Format("#autoLOC_StatSci_KuarkProd", productionRequired);
                 }
                 if (productionRequired > 1)

@@ -328,16 +328,16 @@ namespace StationScience
         {
             string ret = "";
             string reqCyclo = "";
-            ret += Localizer.Format("#autoLOC_StatSci_analyseImp" + Math.Round(txValue * 100));
+            ret += Localizer.Format("#autoLOC_StatSci_analyseImp", Math.Round(txValue * 100));
             if (kuarqsRequired > 0)
             {
-                ret += "\n\n"+ Localizer.Format("#autoLOC_StatSci_KuarkReq") + kuarqsRequired;
+                ret += "\n"+ Localizer.Format("#autoLOC_StatSci_KuarkReq", kuarqsRequired);
                 double productionRequired = 0.01;
                 if (kuarqHalflife > 0)
                 {
-                    ret += Localizer.Format("#autoLOC_StatSci_KuarkHalf", kuarqHalflife);
+                    ret += "\n" + Localizer.Format("#autoLOC_StatSci_KuarkHalf", kuarqHalflife);
                     productionRequired = kuarqsRequired * (1 - Math.Pow(.5, 1.0 / kuarqHalflife));
-                    ret += Localizer.Format("#autoLOC_StatSci_KuarkProd", productionRequired);
+                    ret += "\n" + Localizer.Format("#autoLOC_StatSci_KuarkProd", productionRequired);
                 }
                 if (productionRequired > 1)
                     reqCyclo = Localizer.Format("#autoLOC_StatSci_CycReqM", (Math.Ceiling(productionRequired)));
