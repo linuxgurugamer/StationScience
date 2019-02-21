@@ -53,7 +53,6 @@ namespace StationScience
             //print(vessel.Landed + ", " + vessel.landedAt + ", " + vessel.launchTime + ", " + vessel.situation + ", " + vessel.orbit.referenceBody.name);
             if ((vessel.orbit.referenceBody.name == "Kerbin") && (vessel.situation == Vessel.Situations.LANDED || vessel.situation == Vessel.Situations.PRELAUNCH || vessel.situation == Vessel.Situations.SPLASHED || vessel.altitude <= vessel.orbit.referenceBody.atmosphereDepth))
             {
-                StnSciScenario.Log("in boring place");
                 if (msg)
                     ScreenMessages.PostScreenMessage(Localizer.Format("#autoLOC_StatSci_screen_boring"), 6, ScreenMessageStyle.UPPER_CENTER);
                 return true;
@@ -123,7 +122,6 @@ namespace StationScience
         [KSPAction("#autoLOC_StatSci_startExp")]
         public void StartExpAction(KSPActionParam p)
         {
-            StnSciScenario.Log("in startExperiment(arg)");
             StartExperiment();
         }
 

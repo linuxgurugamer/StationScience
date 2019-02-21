@@ -44,7 +44,6 @@ namespace StationScience
 
         public float calcReward(float value, bool first_time = false)
         {
-            StnSciScenario.Log("calcReward: " + y_intercept + " + " + value + " * " + slope + " * ( " + first_time + " ? " + first_time_multiplier + ")");
             return (y_intercept + value * slope) * (first_time ? first_time_multiplier : 1);
         }
 
@@ -307,7 +306,7 @@ namespace StationScience
                 {
                     if (!ConfigNode.LoadObjectFromConfig(settings, node))
                     {
-                        StnSciScenario.Log("Station Science: failed to load settings");
+                        StnSciScenario.LogError("Station Science: failed to load settings");
                     }
                     settings.Load(node);
                 }
