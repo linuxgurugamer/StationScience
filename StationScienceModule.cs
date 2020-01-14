@@ -55,17 +55,6 @@ namespace StationScience
             return false;
         }
 
-        /*
-        protected override void UpdateCoverterStatus()
-        {
-            if (!checkScientist())
-                this.status = "Inactive; no Scientist";
-            else if (!StationExperiment.checkBoring(vessel, false))
-                this.status = "Inactive; on Kerbin";
-            else
-                base.UpdateConverterStatus();
-        }*/
-
         private float lastCheck = 0;
 
         protected override void PreProcessing()
@@ -82,7 +71,7 @@ namespace StationScience
                 else if (StationExperiment.CheckBoring(vessel, false))
                 {
                     StopResourceConverter();
-                    this.status = "Inactive; on Kerbin";
+                    this.status = "Inactive; on home planet";
                 }
                 else
                 {

@@ -51,7 +51,7 @@ namespace StationScience
         public static bool CheckBoring(Vessel vessel, bool msg = false)
         {
             //print(vessel.Landed + ", " + vessel.landedAt + ", " + vessel.launchTime + ", " + vessel.situation + ", " + vessel.orbit.referenceBody.name);
-            if ((vessel.orbit.referenceBody.name == "Kerbin") && (vessel.situation == Vessel.Situations.LANDED || vessel.situation == Vessel.Situations.PRELAUNCH || vessel.situation == Vessel.Situations.SPLASHED || vessel.altitude <= vessel.orbit.referenceBody.atmosphereDepth))
+            if ((vessel.orbit.referenceBody == FlightGlobals.GetHomeBody()) && (vessel.situation == Vessel.Situations.LANDED || vessel.situation == Vessel.Situations.PRELAUNCH || vessel.situation == Vessel.Situations.SPLASHED || vessel.altitude <= vessel.orbit.referenceBody.atmosphereDepth))
             {
                 if (msg)
                     ScreenMessages.PostScreenMessage(Localizer.Format("#autoLOC_StatSci_screen_boring"), 6, ScreenMessageStyle.UPPER_CENTER);

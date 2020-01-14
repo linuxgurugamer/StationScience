@@ -191,7 +191,7 @@ namespace StationScience.Contracts
                     }
                     catch (KeyNotFoundException)
                     {
-                        continue;
+                        plaValue = body.scienceValues.InSpaceLowDataValue;
                     }
                     ContractCandidate candidate = new ContractCandidate();
                     candidate.body = body;
