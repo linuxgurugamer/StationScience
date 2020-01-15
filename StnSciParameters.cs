@@ -66,7 +66,7 @@ namespace StationScience.Contracts.Parameters
             this.DisableOnStateChange = false;
             this.experimentType = type;
             this.targetBody = body;
-            this.AddParameter(new Parameters.NewPodParameter(), null);
+            //this.AddParameter(new Parameters.NewPodParameter(), null);
             this.AddParameter(new Parameters.DoExperimentParameter(), null);
             this.AddParameter(new Parameters.ReturnExperimentParameter(), null);
         }

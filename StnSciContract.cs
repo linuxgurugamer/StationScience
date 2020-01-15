@@ -144,7 +144,8 @@ namespace StationScience.Contracts
 
         protected override bool Generate()
         {
-            if (ActiveCount() >= StnSciScenario.Instance.settings.maxContracts)
+            //StnSciScenario.Log("Attempting to generate StnSciContract");
+            if(ActiveCount() >= StnSciScenario.Instance.settings.maxContracts)
             {
                 /*StnSciScenario.Log("StationScience contracts cap hit (" +
                     StnSciScenario.Instance.settings.maxContracts + ").");*/
@@ -161,13 +162,15 @@ namespace StationScience.Contracts
                 xp = 0.5;
             List<string> experiments = GetUnlockedExperiments();
             List<CelestialBody> bodies = GetBodies_Reached(true, false);
-            
+            //StnSciScenario.Log("visited bodies contains "+bodies.Count());
+            //StnSciScenario.Log("unlocked experiments contains " + experiments.Count());
             List<ContractCandidate> candidates = new List<ContractCandidate>();
             double totalWeight = 0.0;
 
             //Get most difficult combination of planet and experiment that doesn't exceed random difficulty target
             foreach (var exp in experiments)
             {
+                //StnSciScenario.Log("trying " + exp);
                 double expValue;
                 try
                 {
@@ -175,13 +178,16 @@ namespace StationScience.Contracts
                 }
                 catch (KeyNotFoundException)
                 {
+                    //StnSciScenario.Log("challenge not found continuing " + exp);
                     continue;
                 }
                 foreach (var body in bodies)
                 {
+                    //StnSciScenario.Log("trying " + body.name);
                     int acount = ActiveCount(exp, body);
                     if (acount > 0)
                     {
+                        //StnSciScenario.Log("active count for exceded " + body.name);
                         continue;
                     }
                     double plaValue;
@@ -206,6 +212,7 @@ namespace StationScience.Contracts
                     totalWeight += candidate.weight;
                 }
             }
+            //StnSciScenario.Log("generated candidates count " + candidates.Count());
             double rand = GetUniform() * totalWeight;
             ContractCandidate chosen = null;
             foreach (var cand in candidates)
@@ -229,6 +236,7 @@ namespace StationScience.Contracts
             targetBody = chosen.body;
 
             this.value = chosen.value;
+            //StnSciScenario.Log("picked body" + targetBody.name);
 
             this.AddParameter(new Parameters.StnSciParameter(experimentType, targetBody), null);
 
@@ -249,6 +257,8 @@ namespace StationScience.Contracts
             base.SetFunds(StnSciScenario.Instance.settings.contractFunds.calcAdvance(v, first_time),
                           StnSciScenario.Instance.settings.contractFunds.calcReward(v, first_time),
                           StnSciScenario.Instance.settings.contractFunds.calcFailure(v, first_time), targetBody);
+
+            //StnSciScenario.Log("returning");
             return true;
         }
 
