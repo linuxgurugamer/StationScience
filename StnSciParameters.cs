@@ -421,7 +421,7 @@ namespace StationScience.Contracts.Parameters
                                 StnSciScenario.LogError(e.ToString());
                                 continue;
                             }
-                            if (launched >= this.Root.DateAccepted && completed >= launched)
+                            if (completed >= this.Root.DateAccepted)
                             {
                                 foreach (ConfigNode datum in cn.GetNodes("ScienceData"))
                                 {
