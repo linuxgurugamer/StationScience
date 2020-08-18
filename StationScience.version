@@ -1,0 +1,26 @@
+{
+  "NAME":"StationScienceContinued",
+	 "URL":"https://github.com/linuxgurugamer/StationScience/blob/master/Kerbal%20Space%20Program/GameData/StationScience/StationScience.version",
+	 "DOWNLOAD":"https://github.com/linuxgurugamer/StationScience/releases",
+  "GITHUB": {
+    "USERNAME": "linuxgurugamer",
+    "REPOSITORY": "StationScience",
+    "ALLOW_PRE_RELEASE": false
+  },
+     "VERSION":{
+         "MAJOR":2,
+         "MINOR":6,
+         "PATCH":0,
+         "BUILD":1
+     },
+     "KSP_VERSION":{
+         "MAJOR":1,
+         "MINOR":8,
+         "PATCH":1
+     },
+     "KSP_VERSION_MIN":{
+         "MAJOR":1,
+         "MINOR":8,
+         "PATCH":0
+     }
+ }

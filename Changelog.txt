@@ -1,0 +1,10 @@
+Changelog
+
+2.6.0.1
+	Adoption by Linuxgurugamer
+	Added AssemblyVersion.tt
+	Added buildrelease.bat
+	Added deploy.bat
+	Added jenkins.txt
+	Added InstallChecker
+	Reorganized directory

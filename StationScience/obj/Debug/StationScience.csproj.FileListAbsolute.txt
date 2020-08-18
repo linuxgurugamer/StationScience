@@ -1,0 +1,5 @@
+D:\Users\jbb\github\StationScience\StationScience\bin\Debug\StationScience.dll
+D:\Users\jbb\github\StationScience\StationScience\bin\Debug\StationScience.pdb
+D:\Users\jbb\github\StationScience\StationScience\obj\Debug\StationScience.csproj.CoreCompileInputs.cache
+D:\Users\jbb\github\StationScience\StationScience\obj\Debug\StationScience.dll
+D:\Users\jbb\github\StationScience\StationScience\obj\Debug\StationScience.pdb
