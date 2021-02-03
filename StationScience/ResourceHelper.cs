@@ -73,7 +73,7 @@ namespace StationScience
 
         public static double getResourceDensity(string name)
         {
-            var resDef = PartResourceLibrary.Instance.resourceDefinitions["Bioproducts"];
+            var resDef = PartResourceLibrary.Instance.resourceDefinitions[StationExperiment.BIOPRODUCTS];
             if (resDef != null)
                 return resDef.density;
             return 0;

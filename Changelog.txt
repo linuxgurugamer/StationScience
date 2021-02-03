@@ -8,3 +8,13 @@ Changelog
 	Added jenkins.txt
 	Added InstallChecker
 	Reorganized directory
+	Moved language files into Localization folder
+
+	Merged in code from ModuleCostlyExperiment for REQUIREMENTs nodes  This new functionality to the experiment config files makes it possible to make exciting new experiments with whatever resources you want.
+	Removed all references to:
+		eurekasRequired
+		kuarqsRequired
+		bioproductsRequired
+
+	Depreciated the old science parts which are being replaced by the newer ones 
+	Converted all TGA files to dds

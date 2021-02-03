@@ -1,0 +1,6 @@
+Add code to read KSPField data for old vara
+        //public int eurekasRequired;
+
+        //public int kuarqsRequired;
+
+        //public int bioproductsRequired;

@@ -144,7 +144,7 @@ namespace StationScience
                 }
                 /*
                 eurekasStatus = "";
-                var r = getOrDefault(EurekasGenerator.rates,"Eurekas");
+                var r = getOrDefault(EurekasGenerator.rates,EUREKAS);
                 if (r != null)
                 {
                     if (r.last_available == 0)
@@ -155,11 +155,11 @@ namespace StationScience
                         animActive = true;
                     }
                 }
-                Fields["eurekasStatus"].guiName = "Eurekas";
+                Fields["eurekasStatus"].guiName = EUREKAS;
                 Fields["eurekasStatus"].guiActive = (eurekasStatus != "");
 
                 kuarqStatus = "";
-                var qr = getOrDefault(KuarqGenerator.rates, "Kuarqs");
+                var qr = getOrDefault(KuarqGenerator.rates, KUARQS);
                 var cr = getOrDefault(KuarqGenerator.rates, "ElectricCharge");
                 if (qr != null)
                 {
@@ -176,7 +176,7 @@ namespace StationScience
                 Fields["kuarqStatus"].guiActive = (kuarqStatus != "");
 
                 bioproductsStatus = "";
-                var br = getOrDefault(BioproductsGenerator.rates,"Bioproducts");
+                var br = getOrDefault(BioproductsGenerator.rates,BIOPRODUCTS);
                 var kr = getOrDefault(BioproductsGenerator.rates,"Kibbal");
                 if (br != null)
                 {

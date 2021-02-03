@@ -1,0 +1,119 @@
+-----
+Folder infos : 
+MBM files count : 0
+TGA files count : 0
+PNG files count : 0
+Backup files count : 12
+-----
+-----
+Starting backup of 12 files
+-----
+Reverting D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewCyclo.dds to D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewCyclo.tga
+---
+Reverting D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewCycloEm.dds to D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewCycloEm.tga
+---
+Reverting D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewCycloN.dds to D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewCycloN.tga
+---
+Reverting D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewLab.dds to D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewLab.tga
+---
+Reverting D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewLabEm.dds to D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewLabEm.tga
+---
+Reverting D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewLabN.dds to D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewLabN.tga
+---
+Reverting D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewPod.dds to D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewPod.tga
+---
+Reverting D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewPodN.dds to D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewPodN.tga
+---
+Reverting D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewSpectro.dds to D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewSpectro.tga
+---
+Reverting D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewSpectroEm.dds to D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewSpectroEm.tga
+---
+Reverting D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewSpectroN.dds to D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewSpectroN.tga
+---
+Reverting D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewZoo.dds to D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewZoo.tga
+---
+-----
+Backup done! 12 files processed.
+-----
+-----
+Starting conversion of 12 files.
+    MBM count : 0.
+    TGA count : 12.
+    PNG count : 0.
+0 files excluded, 0 files without mipmaps. 0 files will skip normal detection.0 files will not be resized.
+-----
+LOG : Converting D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewCyclo.tga to D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewCyclo.dds
+    Format : Dxt5, normalmap : False, res: 1024x1024
+Flipping image...
+FlipImage took 10.5504999160767ms
+Image conversion took 355.837707519531ms
+---
+LOG : Converting D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewCycloEm.tga to D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewCycloEm.dds
+    Format : Dxt5, normalmap : False, res: 1024x1024
+Flipping image...
+FlipImage took 6.6838002204895ms
+Image conversion took 245.623199462891ms
+---
+LOG : Converting D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewCycloN.tga to D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewCycloN.dds
+    Format : Dxt5, normalmap : False, res: 1024x1024
+Flipping image...
+FlipImage took 6.72279977798462ms
+Image conversion took 278.538696289063ms
+---
+LOG : Converting D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewLab.tga to D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewLab.dds
+    Format : Dxt5, normalmap : False, res: 1024x1024
+Flipping image...
+FlipImage took 7.99100017547607ms
+Image conversion took 329.713409423828ms
+---
+LOG : Converting D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewLabEm.tga to D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewLabEm.dds
+    Format : Dxt5, normalmap : False, res: 1024x1024
+Flipping image...
+FlipImage took 7.67129993438721ms
+Image conversion took 223.464996337891ms
+---
+LOG : Converting D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewLabN.tga to D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewLabN.dds
+    Format : Dxt5, normalmap : False, res: 512x512
+Flipping image...
+FlipImage took 2.6577000617981ms
+Image conversion took 88.2181015014648ms
+---
+LOG : Converting D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewPod.tga to D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewPod.dds
+    Format : Dxt5, normalmap : False, res: 1024x1024
+Flipping image...
+FlipImage took 8.03969955444336ms
+Image conversion took 334.363403320313ms
+---
+LOG : Converting D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewPodN.tga to D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewPodN.dds
+    Format : Dxt5, normalmap : False, res: 1024x1024
+Flipping image...
+FlipImage took 9.80099964141846ms
+Image conversion took 330.040710449219ms
+---
+LOG : Converting D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewSpectro.tga to D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewSpectro.dds
+    Format : Dxt5, normalmap : False, res: 1024x1024
+Flipping image...
+FlipImage took 7.31589984893799ms
+Image conversion took 316.251800537109ms
+---
+LOG : Converting D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewSpectroEm.tga to D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewSpectroEm.dds
+    Format : Dxt5, normalmap : False, res: 1024x1024
+Flipping image...
+FlipImage took 7.19700002670288ms
+Image conversion took 223.388595581055ms
+---
+LOG : Converting D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewSpectroN.tga to D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewSpectroN.dds
+    Format : Dxt5, normalmap : False, res: 1024x1024
+Flipping image...
+FlipImage took 6.82719993591309ms
+Image conversion took 292.931793212891ms
+---
+LOG : Converting D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewZoo.tga to D:\Users\jbb\github\StationScience\GameData\StationScience\Parts\NewZoo.dds
+    Format : Dxt5, normalmap : False, res: 1024x1024
+Flipping image...
+FlipImage took 8.32859992980957ms
+Image conversion took 330.394104003906ms
+---
+-----
+Conversion done! 12 files processed in 3468.30126953125ms.
+-----

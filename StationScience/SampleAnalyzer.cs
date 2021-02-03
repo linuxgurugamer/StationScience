@@ -101,7 +101,7 @@ namespace StationScience
             this.AddData(sd);
             if (kuarqsRequired > 0)
             {
-                setResourceMaxAmount("Kuarqs", kuarqsRequired);
+                setResourceMaxAmount(StationExperiment.KUARQS, kuarqsRequired);
                 Events["ReviewDataEvent"].guiActive = false;
             }
             else
@@ -114,7 +114,7 @@ namespace StationScience
 
         public new void ReviewDataEvent()
         {
-            var kuarqs = getResourceAmount("Kuarqs");
+            var kuarqs = getResourceAmount(StationExperiment.KUARQS);
             if (kuarqs > 0 && kuarqs < kuarqsRequired)
             {
                 ScreenMessages.PostScreenMessage(Localizer.Format("#autoLOC_StatSci_screen_analyseFull"), 6, ScreenMessageStyle.UPPER_CENTER);
@@ -125,7 +125,7 @@ namespace StationScience
 
         public new void ReviewData()
         {
-            var kuarqs = getResourceAmount("Kuarqs");
+            var kuarqs = getResourceAmount(StationExperiment.KUARQS);
             if (kuarqs > 0 && kuarqs < kuarqsRequired)
             {
                 ScreenMessages.PostScreenMessage(Localizer.Format("#autoLOC_StatSci_screen_analyseAct"), 6, ScreenMessageStyle.UPPER_CENTER);
@@ -164,7 +164,7 @@ namespace StationScience
             {
                 if (lightsMode == 1)
                 {
-                    var kuarqs = getResource("Kuarqs");
+                    var kuarqs = getResource(StationExperiment.KUARQS);
                     animActive = (kuarqs!=null && kuarqs.maxAmount > 0 && kuarqs.amount < kuarqsRequired && kuarqs.amount > 0);
                 }
                 else if (lightsMode == 2) animActive = true;
@@ -207,7 +207,7 @@ namespace StationScience
             {
                 if (kuarqsRequired > 0)
                 {
-                    var kuarqs = getResource("Kuarqs");
+                    var kuarqs = getResource(StationExperiment.KUARQS);
                     if (kuarqs != null && kuarqs.maxAmount > 0 && kuarqs.amount < kuarqsRequired)
                     {
                         if (kuarqs.amount == 0)
@@ -253,14 +253,14 @@ namespace StationScience
             }
             if (kuarqsRequired > 0)
             {
-                var numKuarqs = getResourceAmount("Kuarqs");
+                var numKuarqs = getResourceAmount(StationExperiment.KUARQS);
                 if (numKuarqs > 0)
                 {
 
                     if (GetScienceCount() == 0)
                     {
                         ScreenMessages.PostScreenMessage(Localizer.Format("#autoLOC_StatSci_screen_transmitted"), 6, ScreenMessageStyle.UPPER_CENTER);
-                        setResourceMaxAmount("Kuarqs", 0);
+                        setResourceMaxAmount(StationExperiment.KUARQS, 0);
                     }
                     if (numKuarqs >= kuarqsRequired && GetScienceCount() > 0)
                     {
@@ -270,13 +270,13 @@ namespace StationScience
                             var sd = sdata[0];
                             sd.baseTransmitValue = txValue;
                             ScreenMessages.PostScreenMessage(Localizer.Format("#autoLOC_StatSci_screen_anaComp"), 6, ScreenMessageStyle.UPPER_CENTER);
-                            setResourceMaxAmount("Kuarqs", 0);
+                            setResourceMaxAmount(StationExperiment.KUARQS, 0);
                             Events["ReviewDataEvent"].guiActive = true;
                         }
                     }
                     if (kuarqHalflife > 0)
                     {
-                        var kuarqs = getResource("Kuarqs");
+                        var kuarqs = getResource(StationExperiment.KUARQS);
                         if (kuarqs != null && kuarqs.amount < (.99 * kuarqsRequired))
                         {
                             double delta = TimeWarp.fixedDeltaTime;
