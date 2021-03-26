@@ -18,3 +18,6 @@ Changelog
 
 	Depreciated the old science parts which are being replaced by the newer ones 
 	Converted all TGA files to dds
+
+2.6.0.2
+	Updated .version file with name and version
