@@ -21,3 +21,6 @@ Changelog
 
 2.6.0.2
 	Updated .version file with name and version
+
+2.6.0.3
+	Updated version file with KSP_VERSION_MIN
