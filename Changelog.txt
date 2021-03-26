@@ -24,3 +24,7 @@ Changelog
 
 2.6.0.3
 	Updated version file with KSP_VERSION_MIN
+
+2.6.0.4
+	Fixed error in version file
+	Removed extra .version file in mod dir

@@ -1,6 +1,6 @@
 {
   "NAME": "MOARStationScience",
-  "URL": "https://github.com/linuxgurugamer/StationScience/blob/master/Kerbal%20Space%20Program/GameData/StationScience/StationScience.version",
+  "URL": "http://ksp.spacetux.net/avc/StationScience",
   "DOWNLOAD": "https://github.com/linuxgurugamer/StationScience/releases",
   "GITHUB": {
     "USERNAME": "linuxgurugamer",
@@ -11,7 +11,7 @@
     "MAJOR": 2,
     "MINOR": 6,
     "PATCH": 0,
-    "BUILD": 3
+    "BUILD": 4
   },
   "KSP_VERSION_MIN": {
     "MAJOR": 1,
