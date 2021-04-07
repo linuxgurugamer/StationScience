@@ -147,6 +147,15 @@ namespace StationScience
         {
             base.OnLoad(node);
 
+            if (part.partInfo != null)
+            {
+                node =
+                    GameDatabase.Instance.GetConfigs("PART")
+                                .Single(c => part.partInfo.name == c.name.Replace('_', '.'))
+                                .config.GetNodes("MODULE")
+                                .Single(n => n.GetValue("name") == moduleName);
+            }
+
             var pList = PartResourceLibrary.Instance.resourceDefinitions;
 
             foreach (ConfigNode resNode in node.GetNodes("REQUIREMENT"))
@@ -236,7 +245,7 @@ namespace StationScience
             {
                 PartResource pr = SetResourceMaxAmount(r.Value.name, r.Value.amount);
                 if (r.Value.name == EUREKAS) eurekas = pr;
-                if (r.Value.name == "Boiproducts") bioproducts = pr;
+                if (r.Value.name == BIOPRODUCTS) bioproducts = pr;
             }
             //PartResource eurekas = SetResourceMaxAmount(EUREKAS, eurekasRequired);
             //PartResource kuarqs = SetResourceMaxAmount(KUARQS, kuarqsRequired);
