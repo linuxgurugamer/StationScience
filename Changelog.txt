@@ -28,3 +28,8 @@ Changelog
 2.6.0.4
 	Fixed error in version file
 	Removed extra .version file in mod dir
+
+2.6.0.5
+	Thanks to forum user @xmnovotny for these two fixes:
+		Fixed error of loading science requirement definitions.
+		Fixed typo (both typo and case issue) with name of BIOPRODUCTS by replacing bad text with already-defined constant
