@@ -397,14 +397,6 @@ namespace StationScience
                         ScreenMessages.PostScreenMessage(Localizer.Format("#autoLOC_StatSci_screen_detatch", part.partInfo.title), 2, ScreenMessageStyle.UPPER_CENTER);
                     }
                 }
-                if (numEurekas <= 0 || numKuarqs <=0)
-                {
-                    currentStatus = Status.Starved;
-                }
-                else
-                {
-                    currentStatus = Status.Running;
-                }
                 /*
                 if (numKuarqs > 0)
                 {
