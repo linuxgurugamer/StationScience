@@ -87,7 +87,10 @@ namespace StationScience
 
         public static bool CheckBoring(Vessel vessel, bool msg = false)
         {
-            Log.Info(vessel.Landed + ", " + vessel.landedAt + ", " + vessel.launchTime + ", " + vessel.situation + ", " + vessel.orbit.referenceBody.name);
+	    if(null != Log)
+	    {
+	        Log.Info(vessel.Landed + ", " + vessel.landedAt + ", " + vessel.launchTime + ", " + vessel.situation + ", " + vessel.orbit.referenceBody.name);
+	    }
             if ((vessel.orbit.referenceBody == FlightGlobals.GetHomeBody()) && (vessel.situation == Vessel.Situations.LANDED || vessel.situation == Vessel.Situations.PRELAUNCH || vessel.situation == Vessel.Situations.SPLASHED || vessel.altitude <= vessel.orbit.referenceBody.atmosphereDepth))
             {
                 if (msg)
