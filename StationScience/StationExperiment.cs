@@ -424,7 +424,7 @@ namespace StationScience
                     ReadyToDeploy(false);
 #endif
                 ScienceExperiment experiment = ResearchAndDevelopment.GetExperiment(experimentID);
-                if (!experiment.IsAvailableWhile(GetScienceSituation(vessel), vessel.mainBody))
+                if (currentStatus == Status.Running && !experiment.IsAvailableWhile(GetScienceSituation(vessel), vessel.mainBody))
                 {
                     ScreenMessages.PostScreenMessage(Localizer.Format("Can't perform experiment here."), 6, ScreenMessageStyle.UPPER_CENTER);
                     currentStatus = Status.BadLocation;
