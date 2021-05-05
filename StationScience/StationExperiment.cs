@@ -87,7 +87,10 @@ namespace StationScience
 
         public static bool CheckBoring(Vessel vessel, bool msg = false)
         {
-            Log.Info(vessel.Landed + ", " + vessel.landedAt + ", " + vessel.launchTime + ", " + vessel.situation + ", " + vessel.orbit.referenceBody.name);
+	    if(null != Log)
+	    {
+	        Log.Info(vessel.Landed + ", " + vessel.landedAt + ", " + vessel.launchTime + ", " + vessel.situation + ", " + vessel.orbit.referenceBody.name);
+	    }
             if ((vessel.orbit.referenceBody == FlightGlobals.GetHomeBody()) && (vessel.situation == Vessel.Situations.LANDED || vessel.situation == Vessel.Situations.PRELAUNCH || vessel.situation == Vessel.Situations.SPLASHED || vessel.altitude <= vessel.orbit.referenceBody.atmosphereDepth))
             {
                 if (msg)
@@ -397,14 +400,6 @@ namespace StationScience
                         ScreenMessages.PostScreenMessage(Localizer.Format("#autoLOC_StatSci_screen_detatch", part.partInfo.title), 2, ScreenMessageStyle.UPPER_CENTER);
                     }
                 }
-                if (numEurekas <= 0 || numKuarqs <=0)
-                {
-                    currentStatus = Status.Starved;
-                }
-                else
-                {
-                    currentStatus = Status.Running;
-                }
                 /*
                 if (numKuarqs > 0)
                 {
@@ -432,7 +427,7 @@ namespace StationScience
                     ReadyToDeploy(false);
 #endif
                 ScienceExperiment experiment = ResearchAndDevelopment.GetExperiment(experimentID);
-                if (!experiment.IsAvailableWhile(GetScienceSituation(vessel), vessel.mainBody))
+                if (currentStatus == Status.Running && !experiment.IsAvailableWhile(GetScienceSituation(vessel), vessel.mainBody))
                 {
                     ScreenMessages.PostScreenMessage(Localizer.Format("Can't perform experiment here."), 6, ScreenMessageStyle.UPPER_CENTER);
                     currentStatus = Status.BadLocation;
