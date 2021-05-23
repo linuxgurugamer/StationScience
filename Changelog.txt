@@ -33,3 +33,15 @@ Changelog
 	Thanks to forum user @xmnovotny for these two fixes:
 		Fixed error of loading science requirement definitions.
 		Fixed typo (both typo and case issue) with name of BIOPRODUCTS by replacing bad text with already-defined constant
+
+2.6.1
+	Thanks to github user @Carnildo for these:
+		Remove broken 'Starved' display logic. As a side effect, fixes incorrect 'Running' status display and permits the display of the 'Idle', 'Stored', and 'BadLocation' statuses.
+		Only show the 'Can't perform experiment' message if the experiment is running. Eliminates message spam during launch.
+		Prevent an NRE if StationExperiment.CheckBoring() is called before StationExperiment.OnStart(). This can happen because CheckBoring() is called from StationScienceModule.PreProcessing()
+
+	Thanks to Github user @spoonyboobah for this:
+		Updated descriptions of the Experiment: Plant Growth
+		Added a full set of science reports for Experiment: Prograde Kuarqs.
+		Added Retrograde and Eccentric Kuarqs reports
+
