@@ -1,4 +1,4 @@
-﻿/*
+/*
     This file is part of Station Science.
 
     Station Science is free software: you can redistribute it and/or modify
@@ -23,7 +23,7 @@ using UnityEngine;
 
 namespace StationScience
 {
-    public class StnSciContractReward : IConfigNode
+    public class StnSciContractReward
     {
         [Persistent] public float y_intercept;
         [Persistent] public float slope;
@@ -56,17 +56,9 @@ namespace StationScience
         {
             return calcReward(value, first_time) * failure_multiplier;
         }
-
-        public void Load(ConfigNode node)
-        {
-        }
-
-        public void Save(ConfigNode node)
-        {
-        }
     }
 
-    public class CNMap<TValue> : Dictionary<string, TValue>, IConfigNode where TValue : IConvertible
+    public class CNMap<TValue> : Dictionary<string, TValue> where TValue : IConvertible
     {
         public void Load(ConfigNode node)
         {
@@ -83,11 +75,6 @@ namespace StationScience
                     this[val.name] = default(TValue);
                 }
             }
-        }
-
-        public void Save(ConfigNode node)
-        {
-            StnSciScenario.LogError("CNMap.Save called; not implemented");
         }
     }
 
@@ -122,14 +109,9 @@ namespace StationScience
                 }
             }
         }
-
-        public void Save(ConfigNode node)
-        {
-            StnSciScenario.LogError("CNMapList.Save called; not implemented");
-        }
     }
 
-    public class StnSciSettings : IConfigNode
+    public class StnSciSettings
     {
         [Persistent] public int maxContracts = 4;
         [Persistent] public float progressionFactor = 0.5f;
@@ -143,7 +125,7 @@ namespace StationScience
         [Persistent] public StnSciContractReward contractReputation = new StnSciContractReward(10, 1, failure_multiplier: 1.5f);
         [Persistent] public StnSciContractReward contractDeadline = new StnSciContractReward(2, 0.1f, first_time_multiplier: 2);
 
-        [Persistent] public CNMap<double> experimentChallenge = new CNMap<double>() {
+        public CNMap<double> experimentChallenge = new CNMap<double>() {
               { "StnSciExperiment1", 1 },
               { "StnSciExperiment2", 2 },
               { "StnSciExperiment3", 2.5 },
@@ -151,7 +133,7 @@ namespace StationScience
               { "StnSciExperiment5", 2.5 },
               { "StnSciExperiment6", 3.5 },
           };
-        [Persistent] public CNMap<double> planetChallenge = new CNMap<double>() {
+        public CNMap<double> planetChallenge = new CNMap<double>() {
               { "Kerbin", 1 },
               { "Mun", 3 },
               { "Minmus", 3.25 },
@@ -168,7 +150,6 @@ namespace StationScience
               { "Bop", 11 },
               { "Eeloo", 13 },
           };
-        [Persistent]
         public CNMapSet<string> experimentPrereqs = new CNMapSet<string>() {
               { "StnSciExperiment1", CNMapSet<string>.parse("StnSciExperiment1,StnSciLab") },
               { "StnSciExperiment2", CNMapSet<string>.parse("StnSciExperiment2,StnSciLab,StnSciCyclo") },
