@@ -214,6 +214,11 @@ namespace StationScience
             started = true;
         }
 
+        void OnDestroy()
+        {
+            GameEvents.Contract.onContractsLoaded.Remove(OnContractsLoaded);
+        }
+
         public void OnContractsLoaded()
         {
             print("Contracts Loaded");

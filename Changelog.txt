@@ -59,3 +59,19 @@ Changelog
 2.6.1.3
 	Thanks to github user @SpoonyBoobah for this:
 		Completed ALL Science Experiments and activated them in the cfg's
+
+2.6.2 
+	Thanks to github user @grimmas for this:
+		Added support for Dynamic Battery Storage mod 
+		added USI life support options
+	Thanks to github user @jd284 for this:
+		Fix inability to remove obsolete experiments
+
+	Following delayed:
+	Thanks to github user @spoonyBoobah for this:
+		Added 2 experiments to StationScience, Zoology Observations & Zoology Observations
+
+	Fixed small memory leak due to not releasing a callback from a GameEvent
+
+	Thanks to github user @Grimmas for this patch:	
+		System Heat supported by patch
