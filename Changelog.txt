@@ -75,3 +75,7 @@ Changelog
 
 	Thanks to github user @Grimmas for this patch:	
 		System Heat supported by patch
+
+2.6.2.1
+	Thanks to @gotmachine for this:
+		Remove useless IConfigNode and [Persistent] implementations to fix conflict with KSPCommunityFixes
